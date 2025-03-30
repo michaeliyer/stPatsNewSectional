@@ -1,91 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>stPatsSectional1</title>
-    <link href="https://fonts.googleapis.com/css2?display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>stPatsCursorSectional</title>
+    <link
+      href="https://fonts.googleapis.com/css2?display=swap"
+      rel="stylesheet"
+    />
     <!-- <link href="https://fonts.googleapis.com/css2?family=Belanosima:wght@400;600;700&family=Bungee+Shade&family=Matemasie&family=Oregano:ital@0;1&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet"> -->
-    <link href="style.css" rel="stylesheet" type="text/css">
-</head>
-<body>
-
-<!-- Body Styling Modal -->
-<div id="bodyModal" class="body-modal hidden">
-    <div class="body-modal-content">
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <!-- Body Styling Modal -->
+    <div id="bodyModal" class="body-modal hidden">
+      <div class="body-modal-content">
         <h2>Style Body</h2>
         <label for="bodyBgColor">Background Color:</label>
-        <input type="color" id="bodyBgColor" value="#000000">
-        <br>
+        <input type="color" id="bodyBgColor" value="#000000" />
+        <br />
         <label for="bodyFontColor">Font Color:</label>
-        <input type="color" id="bodyFontColor" value="#e6eafe">
-        <br>
+        <input type="color" id="bodyFontColor" value="#e6eafe" />
+        <br />
         <button id="applyBodyStyler">Apply</button>
         <button id="closeBodyStyler">Close</button>
+      </div>
     </div>
-</div>
 
+    <!-- <h1>✍🏼 theSectionalOne ✍🏼</button> -->
+    <div class="page-wrapper">
+      <div class="button-container">
+        <button id="openBodyStyler" class="body-styler-btn">
+          ✍🏼 stPatsNewSectional ✍🏼
+        </button>
+        <button onclick="toggleAllSections()" id="toggleAllBtn">
+          👁 Show All Sections
+        </button>
+        <button onclick="toggleHeaderControls()" id="headerToggleBtn">
+          ➕ Show Controls
+        </button>
+      </div>
 
-<button id="openBodyStyler" class="body-styler-btn">✍🏼 theSectionalOne ✍🏼</button>
-<div class="page-wrapper">
-    <!-- Button to Open Body Styling Modal -->
-
-    <!-- <a href="index2.html" id="linkBack">Go To New Original!</a> -->
-    <!-- <a href="index3.html" id="linkBack">Go To New Original!</a> -->
-    <button onclick="toggleAllSections()" id="toggleAllBtn">👁 Show All Sections</button>
-
-    <div id="mainContainer">
-
-        <div id="headerContainer">
-
-
-            <button onclick="toggleHeaderControls()" id="headerToggleBtn">➕ Show Controls</button> </div>
-</div>
-            <div id="controls" class="hidden">
-                <div class="newFileSection">
-                    <h2>✍🏼 Add A New Section ✍🏼</h2>
-                    <input type="text" id="newSection" placeholder="New Section Name">
-                    <button onclick="addSection()">➕ Add Section</button>
-                    
-                </div>
-                <div class="importExportSection">
-                    <button onclick="exportData()" class="export-button">📤 Export</button>
-                    <label for="importFile" class="import-button">📥 Import</label>
-                    <input type="file" id="importFile" accept=".json" onchange="importData(event)" style="display:none;">
-                </div>
-            </div>
+      <div id="mainContainer">
+        <div id="controls" class="hidden">
+          <div class="newFileSection">
+            <h2>✍🏼 Add A New Section ✍🏼</h2>
+            <input type="text" id="newSection" placeholder="New Section Name" />
+            <button onclick="addSection()">➕ Add Section</button>
+          </div>
+          <div class="importExportSection">
+            <button onclick="exportData()" class="export-button">
+              📤 Export
+            </button>
+            <label for="importFile" class="import-button">📥 Import</label>
+            <input
+              type="file"
+              id="importFile"
+              accept=".json"
+              onchange="importData(event)"
+              style="display: none"
+            />
+          </div>
         </div>
+
         <div id="sectionsContainer"></div>
+      </div>
     </div>
 
     <!-- Style Modal -->
     <div id="styleModal" class="modal">
+      <div class="modal-content">
+        <h3>Customize Section</h3>
+        <label for="fontSelect">Font:</label>
+        <select id="fontSelect"></select>
 
-        
+        <label for="fontSize">Font Size (px):</label>
+        <input type="number" id="fontSize" value="16" min="8" max="100" />
 
-        <div class="modal-content">
+        <label for="textColor">Text Color:</label>
+        <input type="color" id="textColor" />
 
-            <h3>Customize Section</h3>
-            <label for="fontSelect">Font:</label>
-            <select id="fontSelect"></select>
+        <label for="bgColor">Background Color:</label>
+        <input type="color" id="bgColor" />
 
-            <label for="fontSize">Font Size (px):</label>
-            <input type="number" id="fontSize" value="16" min="8" max="100">
-
-            <label for="textColor">Text Color:</label>
-            <input type="color" id="textColor">
-
-            <label for="bgColor">Background Color:</label>
-            <input type="color" id="bgColor">
-
-            <button onclick="applyStyle()">✅ Apply</button>
-            <button onclick="closeStyleModal()">❌ Cancel</button>
-
-        </div>
+        <button onclick="applyStyle()">✅ Apply</button>
+        <button onclick="closeStyleModal()">❌ Cancel</button>
+      </div>
     </div>
-
 
     <script src="fonts.js"></script>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
