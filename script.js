@@ -354,7 +354,7 @@ function renderTasks(sectionName) {
 // Delete task
 function deleteTask(sectionName, taskIndex) {
   if (!confirm("⚠️ Are you sure you want to delete this task?")) return;
-  if (!confirm("🔥 Final warning: This task will be gone forever!")) return;
+  if (!confirm("🔥 Final warning: This task will disappear forever!")) return;
 
   sections[sectionName].tasks.splice(taskIndex, 1);
   renderTasks(sectionName);

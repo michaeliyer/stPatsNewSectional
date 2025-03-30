@@ -1,11 +1,11 @@
 const googleFonts = [
-  "Belanosima",
-  "Bungee Shade",
-  "Concert One",
-  "Lilita One",
-  "Matemasie",
-  "Oregano",
-  "Silkscreen",
+  "Roboto", "Open Sans", "Lato", "Montserrat", "Poppins", "Raleway",
+  "Nunito", "Oswald", "Merriweather", "Quicksand", "Playfair Display",
+  "Dancing Script", "Pacifico", "Indie Flower", "Bangers", "Anton", "Concert One",
+  "Cinzel", "Fredoka", "Caveat", "Carter One", "Courgette", "Julius Sans One", "Matemasie",
+  "Kalam", "Lobster", "Lora", "Merriweather Sans", "Oxygen", "PT Sans", "Bungee Shade", "Silkscreen",
+  "Righteous", "Shadows Into Light", "Satisfy", "Rock Salt", "Spicy Rice", "Alfa Slab One", "Cormorant",
+  "Ga Maamli"
 ];
 
 // Dynamically load Google Fonts

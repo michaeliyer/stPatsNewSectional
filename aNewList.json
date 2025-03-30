@@ -1,0 +1,21 @@
+{"aPracticeDeal": {
+    "tasks": [
+      {
+        "text": "A Core Notepad Page",
+        "checked": true
+      },
+      {
+        "text": "UI Controls & Modals",
+        "checked": true
+      },
+      {
+        "text": "Checklists",
+        "checked": true
+      }
+    ],
+    "fontFamily": "PT Sans",
+    "fontSize": 26,
+    "color": "#376a0b",
+    "backgroundColor": "#46c867"
+  }
+}
