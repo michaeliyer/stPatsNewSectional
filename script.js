@@ -323,9 +323,9 @@ function renderTasks(sectionName) {
     if (taskObj.checked) {
       listItem.classList.add("completed");
       if (completedStyle) {
-        listItem.style.fontFamily = completedStyle.fontFamily;
-        listItem.style.fontSize = `${completedStyle.fontSize}px`;
-        listItem.style.color = completedStyle.textColor;
+        label.style.fontFamily = completedStyle.fontFamily;
+        label.style.fontSize = `${completedStyle.fontSize}px`;
+        label.style.color = completedStyle.textColor;
         listItem.style.backgroundColor = completedStyle.bgColor;
       }
     }
@@ -337,14 +337,14 @@ function renderTasks(sectionName) {
       if (checkbox.checked) {
         listItem.classList.add("completed");
         if (completedStyle) {
-          listItem.style.fontFamily = completedStyle.fontFamily;
-          listItem.style.fontSize = `${completedStyle.fontSize}px`;
-          listItem.style.color = completedStyle.textColor;
+          label.style.fontFamily = completedStyle.fontFamily;
+          label.style.fontSize = `${completedStyle.fontSize}px`;
+          label.style.color = completedStyle.textColor;
           listItem.style.backgroundColor = completedStyle.bgColor;
         }
       } else {
         listItem.classList.remove("completed");
-        listItem.removeAttribute("style"); // Reset to default
+        label.removeAttribute("style"); // Reset label styles
         listItem.style.backgroundColor = bgColor; // Reapply section bg
       }
 
@@ -639,9 +639,12 @@ document.getElementById("applyCompletedStyle").addEventListener("click", () => {
   if (section) {
     const completedTasks = section.querySelectorAll(".completed");
     completedTasks.forEach((task) => {
-      task.style.fontFamily = style.fontFamily;
-      task.style.fontSize = `${style.fontSize}px`;
-      task.style.color = style.textColor;
+      const label = task.querySelector("label");
+      if (label) {
+        label.style.fontFamily = style.fontFamily;
+        label.style.fontSize = `${style.fontSize}px`;
+        label.style.color = style.textColor;
+      }
       task.style.backgroundColor = style.bgColor;
     });
   }

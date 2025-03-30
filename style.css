@@ -159,6 +159,7 @@ button:hover {
   display: flex;
   flex-direction: column;
   transition: 0.3s ease;
+  font-size: inherit;
 }
 
 .section-title {
@@ -224,7 +225,6 @@ li button {
 .completed {
   /* text-decoration: line-through; */
   opacity: 0.7;
-  font-size: inherit !important;
 }
 
 /* Modal */
@@ -305,11 +305,8 @@ li button {
   }
 }
 
-.section {
-  font-size: inherit;
-}
 .section * {
-  font-size: inherit !important;
+  font-size: inherit;
 }
 
 .menu-btn {
