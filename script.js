@@ -244,18 +244,7 @@ function toggleContent(section, toggleBtn) {
 
   saveSections();
 }
-// function toggleContent(section) {
-//     const content = section.querySelector(".section-content");
-//     const toggleBtn = section.querySelector("button:nth-of-type(2)");
 
-//     if (content.style.display === "none") {
-//         content.style.display = "block";
-//         toggleBtn.textContent = "👁 Hide";
-//     } else {
-//         content.style.display = "none";
-//         toggleBtn.textContent = "👁 Show";
-//     }
-// }
 
 // Add task
 function addTask(sectionName) {
@@ -563,43 +552,6 @@ function populateFontDropdown() {
   });
 }
 
-// const openBtn = document.getElementById("openBodyStyler");
-// const modal = document.getElementById("bodyModal");
-// const closeBtn = document.getElementById("closeBodyStyler");
-// const applyBtn = document.getElementById("applyBodyStyler");
-// const bodyBgColor = document.getElementById("bodyBgColor");
-// const bodyFontColor = document.getElementById("bodyFontColor");
-
-// // Initialize modal as hidden
-// modal.style.display = "none";
-
-// // Toggle modal visibility
-// openBtn.addEventListener("click", function () {
-//   if (modal.style.display === "none") {
-//     modal.style.display = "flex";
-//   } else {
-//     modal.style.display = "none";
-//   }
-// });
-
-// // Close modal
-// closeBtn.addEventListener("click", function () {
-//   modal.style.display = "none";
-// });
-
-// // Apply and close
-// applyBtn.addEventListener("click", function () {
-//   document.body.style.backgroundColor = bodyBgColor.value;
-//   document.body.style.color = bodyFontColor.value;
-//   localStorage.setItem(
-//     "bodyStyle",
-//     JSON.stringify({
-//       backgroundColor: bodyBgColor.value,
-//       color: bodyFontColor.value,
-//     })
-//   );
-//   modal.style.display = "none";
-// });
 
 const openBtn = document.getElementById("openBodyStyler");
 const modal = document.getElementById("bodyModal");
@@ -633,8 +585,3 @@ applyBtn.addEventListener("click", () => {
 
   modal.classList.add("hidden");
 });
-
-// openBtn.addEventListener("click", () => {
-//   console.log("🎯 Clicked style body button");
-//   modal.classList.toggle("hidden");
-// });
