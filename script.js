@@ -58,6 +58,14 @@ function renderSections() {
     uncheckAllBtn.addEventListener("click", () => uncheckAllTasks(sectionName));
     dropdown.appendChild(uncheckAllBtn);
 
+    // 🎯 Completed Style Button
+    const completedStyleBtn = document.createElement("button");
+    completedStyleBtn.textContent = "🎯 Completed Style";
+    completedStyleBtn.addEventListener("click", () =>
+      openCompletedStyleModal(sectionName)
+    );
+    dropdown.appendChild(completedStyleBtn);
+
     // 🎨 Style Button
     const styleBtn = document.createElement("button");
     styleBtn.textContent = "🎨 Style";
@@ -245,7 +253,6 @@ function toggleContent(section, toggleBtn) {
   saveSections();
 }
 
-
 // Add task
 function addTask(sectionName) {
   const taskInput = document.getElementById(
@@ -274,7 +281,9 @@ function renderTasks(sectionName) {
   );
   list.innerHTML = "";
 
-  const bgColor = sections[sectionName].backgroundColor || "#ffffff"; // Get saved bg
+  const bgColor = sections[sectionName].backgroundColor || "#ffffff";
+  const completedStyle =
+    JSON.parse(localStorage.getItem(`completedStyle-${sectionName}`)) || {};
 
   sections[sectionName].tasks.forEach((taskObj, index) => {
     const listItem = document.createElement("li");
@@ -284,21 +293,6 @@ function renderTasks(sectionName) {
     checkbox.checked = taskObj.checked;
     checkbox.id = `${sectionName.replace(/\s+/g, "")}Task${index}`;
 
-    // Apply checked style
-    if (taskObj.checked) {
-      listItem.classList.add("completed");
-    }
-
-    checkbox.addEventListener("change", () => {
-      sections[sectionName].tasks[index].checked = checkbox.checked;
-      if (checkbox.checked) {
-        listItem.classList.add("completed");
-      } else {
-        listItem.classList.remove("completed");
-      }
-      saveSections();
-    });
-
     const label = document.createElement("label");
     label.htmlFor = checkbox.id;
 
@@ -306,21 +300,15 @@ function renderTasks(sectionName) {
       taskObj.text.startsWith("http://") ||
       taskObj.text.startsWith("https://")
     ) {
-      // It's a URL → make clickable link
       const link = document.createElement("a");
       link.href = taskObj.text;
       link.textContent = taskObj.text;
-      link.target = "_blank"; // Open in new tab
-      link.style.color = "#ffeb3b"; // Optional styling (yellow link)
+      link.target = "_blank";
+      link.style.color = "#ffeb3b";
       label.appendChild(link);
     } else {
-      // Normal text
       label.textContent = taskObj.text;
     }
-
-    // const label = document.createElement("label");
-    // label.htmlFor = checkbox.id;
-    // label.textContent = taskObj.text;
 
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "🗑";
@@ -328,8 +316,40 @@ function renderTasks(sectionName) {
       deleteTask(sectionName, index);
     });
 
-    // 🟢 Match task background to section bg
+    // Match section background
     listItem.style.backgroundColor = bgColor;
+
+    // ✅ Apply completed styling if checked
+    if (taskObj.checked) {
+      listItem.classList.add("completed");
+      if (completedStyle) {
+        listItem.style.fontFamily = completedStyle.fontFamily;
+        listItem.style.fontSize = `${completedStyle.fontSize}px`;
+        listItem.style.color = completedStyle.textColor;
+        listItem.style.backgroundColor = completedStyle.bgColor;
+      }
+    }
+
+    // 🧠 Add or remove styling on toggle
+    checkbox.addEventListener("change", () => {
+      sections[sectionName].tasks[index].checked = checkbox.checked;
+
+      if (checkbox.checked) {
+        listItem.classList.add("completed");
+        if (completedStyle) {
+          listItem.style.fontFamily = completedStyle.fontFamily;
+          listItem.style.fontSize = `${completedStyle.fontSize}px`;
+          listItem.style.color = completedStyle.textColor;
+          listItem.style.backgroundColor = completedStyle.bgColor;
+        }
+      } else {
+        listItem.classList.remove("completed");
+        listItem.removeAttribute("style"); // Reset to default
+        listItem.style.backgroundColor = bgColor; // Reapply section bg
+      }
+
+      saveSections();
+    });
 
     listItem.appendChild(checkbox);
     listItem.appendChild(label);
@@ -543,15 +563,100 @@ document.addEventListener("DOMContentLoaded", () => {
 // Populate fonts dropdown (from fonts.js)
 function populateFontDropdown() {
   const fontSelect = document.getElementById("fontSelect");
+  const completedFontSelect = document.getElementById("completedFontFamily");
+
+  // Clear existing options
+  fontSelect.innerHTML = "";
+  completedFontSelect.innerHTML = "";
+
+  // Add default options
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "Arial";
+  defaultOption.textContent = "Arial";
+  fontSelect.appendChild(defaultOption);
+
+  const defaultCompletedOption = document.createElement("option");
+  defaultCompletedOption.value = "Arial";
+  defaultCompletedOption.textContent = "Arial";
+  completedFontSelect.appendChild(defaultCompletedOption);
+
+  // Add all available fonts
   googleFonts.forEach((font) => {
+    // For main font select
     const option = document.createElement("option");
     option.value = font;
     option.textContent = font;
     option.style.fontFamily = font;
     fontSelect.appendChild(option);
+
+    // For completed font select
+    const completedOption = document.createElement("option");
+    completedOption.value = font;
+    completedOption.textContent = font;
+    completedOption.style.fontFamily = font;
+    completedFontSelect.appendChild(completedOption);
   });
 }
 
+let currentCompletedSection = null;
+
+function openCompletedStyleModal(sectionName) {
+  currentCompletedSection = sectionName;
+  const saved =
+    JSON.parse(localStorage.getItem(`completedStyle-${sectionName}`)) || {};
+
+  document.getElementById("completedFontFamily").value =
+    saved.fontFamily || "Arial";
+  document.getElementById("completedFontSize").value = saved.fontSize || 16;
+  document.getElementById("completedTextColor").value =
+    saved.textColor || "#888888";
+  document.getElementById("completedBgColor").value =
+    saved.bgColor || "#eeeeee";
+
+  document.getElementById("completedStyleModal").style.display = "block";
+}
+
+document.getElementById("applyCompletedStyle").addEventListener("click", () => {
+  if (!currentCompletedSection) return;
+
+  const style = {
+    fontFamily: document.getElementById("completedFontFamily").value,
+    fontSize: parseInt(document.getElementById("completedFontSize").value),
+    textColor: document.getElementById("completedTextColor").value,
+    bgColor: document.getElementById("completedBgColor").value,
+  };
+
+  // Save the style
+  localStorage.setItem(
+    `completedStyle-${currentCompletedSection}`,
+    JSON.stringify(style)
+  );
+
+  // Apply the style immediately to completed tasks
+  const section = document.getElementById(
+    `section-${currentCompletedSection.replace(/\s+/g, "")}`
+  );
+  if (section) {
+    const completedTasks = section.querySelectorAll(".completed");
+    completedTasks.forEach((task) => {
+      task.style.fontFamily = style.fontFamily;
+      task.style.fontSize = `${style.fontSize}px`;
+      task.style.color = style.textColor;
+      task.style.backgroundColor = style.bgColor;
+    });
+  }
+
+  // Re-render tasks to ensure all styles are applied
+  renderTasks(currentCompletedSection);
+
+  // Hide the modal
+  document.getElementById("completedStyleModal").style.display = "none";
+});
+
+document.getElementById("closeCompletedStyle").addEventListener("click", () => {
+  document.getElementById("completedStyleModal").style.display = "none";
+  currentCompletedSection = null;
+});
 
 const openBtn = document.getElementById("openBodyStyler");
 const modal = document.getElementById("bodyModal");

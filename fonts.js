@@ -5,7 +5,7 @@ const googleFonts = [
   "Cinzel", "Fredoka", "Caveat", "Carter One", "Courgette", "Julius Sans One", "Matemasie",
   "Kalam", "Lobster", "Lora", "Merriweather Sans", "Oxygen", "PT Sans", "Bungee Shade", "Silkscreen",
   "Righteous", "Shadows Into Light", "Satisfy", "Rock Salt", "Spicy Rice", "Alfa Slab One", "Cormorant",
-  "Ga Maamli", "Luckiest Guy"
+  "Ga Maamli", "Luckiest Guy", "Protest Riot", "Big Shoulders Stencil"
 ];
 
 // Dynamically load Google Fonts

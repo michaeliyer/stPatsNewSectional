@@ -112,7 +112,6 @@ input[type="file"] {
   font-size: 1rem;
 } */
 
-
 .body-styler-btn:hover,
 #toggleAllBtn:hover,
 #headerToggleBtn:hover {
@@ -120,10 +119,8 @@ input[type="file"] {
   background-color: rgb(125, 125, 125);
 }
 
-
-
 button:hover {
-  background:  #b61010;
+  background: #b61010;
 }
 
 .export-button,
@@ -225,13 +222,9 @@ li button {
 
 /* Completed task */
 .completed {
-  /* text-decoration: none; */
-  /* font-family: "Silkscreen", sans-serif; */
-  /* font-family: "Matemasie", sans-serif; */
-  font-family: "Concert One", sans-serif;
-  opacity: 0.9;
-  background-color: black;
-  color: rgb(14, 41, 52);
+  /* text-decoration: line-through; */
+  opacity: 0.7;
+  font-size: inherit !important;
 }
 
 /* Modal */
@@ -249,13 +242,15 @@ li button {
 
 .modal-content {
   background-color: #190101;
-  margin: 10% auto;
+  margin: 15% auto;
   padding: 1rem;
   border: 1px solid #888;
   width: 90%;
   max-width: 400px;
   border-radius: 10px;
   text-align: center;
+  position: relative;
+  z-index: 1000;
 }
 
 .modal-content label {
@@ -267,6 +262,24 @@ li button {
 .modal-content select,
 .modal-content input[type="color"],
 .modal-content input[type="number"] {
+  width: 80%;
+  margin-bottom: 0.5rem;
+  padding: 0.4rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.modal-content input[type="number"] {
+  width: 80%;
+  margin-bottom: 0.5rem;
+  padding: 0.4rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.modal-content select,
+.modal-content input[type="color"] {
   width: 80%;
   margin-bottom: 0.5rem;
   padding: 0.4rem;
@@ -390,7 +403,6 @@ li button {
   display: none;
 }
 
-
 .body-modal-content {
   background: rgb(88, 88, 88);
   padding: 2rem;
@@ -398,7 +410,6 @@ li button {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   text-align: center;
 }
-
 
 .button-container {
   display: flex;
