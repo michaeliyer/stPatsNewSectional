@@ -523,42 +523,24 @@ function toggleAllSections() {
   allSectionsHidden = !allSectionsHidden;
 }
 
-let headerControlsVisible = false;
 function toggleHeaderControls() {
   const controls = document.getElementById("controls");
   const btn = document.getElementById("headerToggleBtn");
 
-  if (headerControlsVisible) {
-    controls.style.display = "none";
-    btn.textContent = "➕ Show Controls";
-  } else {
-    controls.style.display = "flex";
-    btn.textContent = "➖ Hide Controls";
-  }
-
-  headerControlsVisible = !headerControlsVisible;
+  controls.classList.toggle("hidden-controls");
+  const isHidden = controls.classList.contains("hidden-controls");
+  btn.textContent = isHidden ? "➕ Show Controls" : "➖ Hide Controls";
 }
 
-// Optional: Start hidden on page load
+// Initialize controls state on page load
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("controls").style.display = "none";
-  document.getElementById("headerToggleBtn").textContent = "➕ Show Controls";
+  const controls = document.getElementById("controls");
+  const toggleBtn = document.getElementById("headerToggleBtn");
+
+  // Start with controls hidden
+  controls.classList.add("hidden-controls");
+  toggleBtn.textContent = "➕ Show Controls";
 });
-
-// function toggleHeaderControls() {
-//     const controls = document.getElementById("controls");
-//     const btn = document.getElementById("headerToggleBtn");
-
-//     if (!headerControlsVisible) {
-//         controls.style.display = "flex";
-//         btn.textContent = "➖ Hide Controls";
-//     } else {
-//         controls.style.display = "none";
-//         btn.textContent = "➕ Show Controls";
-//     }
-
-//     headerControlsVisible = !headerControlsVisible;
-// }
 
 // Populate fonts dropdown (from fonts.js)
 function populateFontDropdown() {
@@ -736,7 +718,7 @@ document.getElementById("notepadImport").addEventListener("change", (e) => {
 
 // Clear
 // function clearNotepad() {
-//   if (confirm("Clear the notepad? This can’t be undone.")) {
+//   if (confirm("Clear the notepad? This can't be undone.")) {
 //     notepad.innerHTML = "";
 //     localStorage.removeItem(notepadKey);
 //   }
@@ -788,7 +770,7 @@ document.getElementById("notepadImport").addEventListener("change", (e) => {
 
 //   // Clear
 //   window.clearNotepad = function () {
-//     if (confirm("Clear the notepad? This can’t be undone.")) {
+//     if (confirm("Clear the notepad? This can't be undone.")) {
 //       notepad.innerHTML = "";
 //       localStorage.removeItem(notepadKey);
 //     }
@@ -869,7 +851,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Clear notepad
   window.clearNotepad = function () {
-    if (confirm("Clear the notepad? This can’t be undone.")) {
+    if (confirm("Clear the notepad? This can't be undone.")) {
       notepad.innerHTML = "";
       localStorage.removeItem(notepadKey);
     }
