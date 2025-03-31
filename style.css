@@ -5,12 +5,6 @@
   box-sizing: border-box;
 }
 
-html,
-body {
-  height: auto;
-  overflow-y: auto;
-}
-
 #linkBack {
   padding: 0.5rem 1rem;
   cursor: pointer;
@@ -24,7 +18,6 @@ body {
 }
 
 body {
-  height: 300rem;
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 1rem;
@@ -74,15 +67,12 @@ body {
 
 /* Controls (Add Section, Export/Import) */
 #controls {
-  position: relative;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 1rem;
   margin-bottom: 1rem;
   width: 100%;
-  max-height: 80vh; /* or any size you want */
-  overflow-y: auto;
 }
 
 .newFileSection,
@@ -97,13 +87,6 @@ body {
   background-color: #0b55a4;
   width: 350px;
 }
-
-/* .newFileSection {
-  position: fixed;
-  top: 17rem;
-  left: 10rem;
-  z-index: 100;
-} */
 
 input[type="text"],
 input[type="file"] {
@@ -417,27 +400,12 @@ li button {
   display: none !important;
 }
 
-.hidden-controls {
-  display: none !important;
-  /* position: fixed;
-  top: 17rem;
-  left: 0rem;
-  z-index: 1000; */
-}
-
 .body-modal-content {
   background: rgb(88, 88, 88);
   padding: 2rem;
   border-radius: 0.75rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   text-align: center;
-}
-
-.body-modal {
-  position: fixed;
-  top: 12rem;
-  left: 1rem;
-  z-index: 1000;
 }
 
 .button-container {
@@ -449,21 +417,16 @@ li button {
   width: 100%;
 }
 
+
+
+
 #mainUI {
   display: block;
-  position: relative;
-  top: 5rem;
-  left: 0rem;
-  z-index: 1000;
 }
 
 .bodyControlToggle {
   background-color: #007bff;
   cursor: pointer;
-  position: fixed;
-  top: 2rem;
-  left: 3rem;
-  z-index: 1000;
 }
 
 #notepadImport {
@@ -472,13 +435,13 @@ li button {
 
 .notepad-controls {
   position: fixed;
-  top: 7rem;
+  top: 1rem;
   left: 1rem;
   z-index: 1000;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255,255,255,0.95);
   padding: 0.5rem;
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 #notepad {
@@ -499,9 +462,10 @@ li button {
   cursor: pointer;
 }
 
+
 .floating-toggle {
   position: fixed;
-  top: 2rem;
+  bottom: 1rem;
   right: 1rem;
   z-index: 9999;
   padding: 0.6rem 1.2rem;
@@ -511,8 +475,4 @@ li button {
   border: none;
   border-radius: 6px;
   cursor: pointer;
-}
-
-#controls:not(.hidden-controls) {
-  display: flex;
 }

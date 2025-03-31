@@ -1,5 +1,5 @@
 // Retrieve sections from localStorage or initialize
-let sections = JSON.parse(localStorage.getItem("allSectionsLocal")) || {};
+let sections = JSON.parse(localStorage.getItem("allSections")) || {};
 
 // References
 const container = document.getElementById("sectionsContainer");
@@ -176,7 +176,7 @@ function renderSections() {
 
 // Save sections
 function saveSections() {
-  localStorage.setItem("allSectionsLocal", JSON.stringify(sections));
+  localStorage.setItem("allSections", JSON.stringify(sections));
 }
 
 // Add section
@@ -523,24 +523,42 @@ function toggleAllSections() {
   allSectionsHidden = !allSectionsHidden;
 }
 
+let headerControlsVisible = false;
 function toggleHeaderControls() {
   const controls = document.getElementById("controls");
   const btn = document.getElementById("headerToggleBtn");
 
-  controls.classList.toggle("hidden-controls");
-  const isHidden = controls.classList.contains("hidden-controls");
-  btn.textContent = isHidden ? "➕ Show Controls" : "➖ Hide Controls";
+  if (headerControlsVisible) {
+    controls.style.display = "none";
+    btn.textContent = "➕ Show Controls";
+  } else {
+    controls.style.display = "flex";
+    btn.textContent = "➖ Hide Controls";
+  }
+
+  headerControlsVisible = !headerControlsVisible;
 }
 
-// Initialize controls state on page load
+// Optional: Start hidden on page load
 document.addEventListener("DOMContentLoaded", () => {
-  const controls = document.getElementById("controls");
-  const toggleBtn = document.getElementById("headerToggleBtn");
-
-  // Start with controls hidden
-  controls.classList.add("hidden-controls");
-  toggleBtn.textContent = "➕ Show Controls";
+  document.getElementById("controls").style.display = "none";
+  document.getElementById("headerToggleBtn").textContent = "➕ Show Controls";
 });
+
+// function toggleHeaderControls() {
+//     const controls = document.getElementById("controls");
+//     const btn = document.getElementById("headerToggleBtn");
+
+//     if (!headerControlsVisible) {
+//         controls.style.display = "flex";
+//         btn.textContent = "➖ Hide Controls";
+//     } else {
+//         controls.style.display = "none";
+//         btn.textContent = "➕ Show Controls";
+//     }
+
+//     headerControlsVisible = !headerControlsVisible;
+// }
 
 // Populate fonts dropdown (from fonts.js)
 function populateFontDropdown() {
@@ -676,16 +694,137 @@ applyBtn.addEventListener("click", () => {
   modal.classList.add("hidden");
 });
 
-
-
-
-
-
-
-// Typed data is persisting *** html garbage showing up *** Typed data IS persisting 
 const notepad = document.getElementById("notepad");
 const notepadKey = "notepadContent";
 
+// Load saved content
+window.addEventListener("DOMContentLoaded", () => {
+  const saved = localStorage.getItem(notepadKey);
+  if (saved) notepad.innerHTML = saved;
+});
+
+// Auto-save on input
+notepad.addEventListener("input", () => {
+  localStorage.setItem(notepadKey, notepad.innerHTML);
+});
+
+// Export
+function downloadNotepad() {
+  const blob = new Blob([JSON.stringify({ content: notepad.innerHTML })], {
+    type: "application/json",
+  });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "notepad.json";
+  a.click();
+}
+
+// Import
+document.getElementById("notepadImport").addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    const data = JSON.parse(event.target.result);
+    if (data.content) {
+      notepad.innerHTML = data.content;
+      localStorage.setItem(notepadKey, data.content);
+    }
+  };
+  reader.readAsText(file);
+});
+
+// Clear
+// function clearNotepad() {
+//   if (confirm("Clear the notepad? This can’t be undone.")) {
+//     notepad.innerHTML = "";
+//     localStorage.removeItem(notepadKey);
+//   }
+// }
+
+// // Toggle controls
+// function toggleNotepadControls() {
+//   document.querySelector(".notepad-controls").classList.toggle("hidden");
+// }
+
+// window.addEventListener("DOMContentLoaded", () => {
+//   const notepad = document.getElementById("notepad");
+//   const notepadKey = "notepadContent";
+
+//   // Load saved content
+//   const saved = localStorage.getItem(notepadKey);
+//   if (saved) notepad.innerHTML = saved;
+
+//   // Auto-save on input
+//   notepad.addEventListener("input", () => {
+//     localStorage.setItem(notepadKey, notepad.innerHTML);
+//   });
+
+//   // Export
+//   window.downloadNotepad = function () {
+//     const blob = new Blob([JSON.stringify({ content: notepad.innerHTML })], {
+//       type: "application/json",
+//     });
+//     const a = document.createElement("a");
+//     a.href = URL.createObjectURL(blob);
+//     a.download = "notepad.json";
+//     a.click();
+//   };
+
+//   // Import
+//   document.getElementById("notepadImport").addEventListener("change", (e) => {
+//     const file = e.target.files[0];
+//     if (!file) return;
+//     const reader = new FileReader();
+//     reader.onload = (event) => {
+//       const data = JSON.parse(event.target.result);
+//       if (data.content) {
+//         notepad.innerHTML = data.content;
+//         localStorage.setItem(notepadKey, data.content);
+//       }
+//     };
+//     reader.readAsText(file);
+//   });
+
+//   // Clear
+//   window.clearNotepad = function () {
+//     if (confirm("Clear the notepad? This can’t be undone.")) {
+//       notepad.innerHTML = "";
+//       localStorage.removeItem(notepadKey);
+//     }
+//   };
+
+//   // Toggle controls
+//   window.toggleNotepadControls = function () {
+//     document.querySelector(".notepad-controls").classList.toggle("hidden");
+//   };
+// });
+// window.addEventListener("DOMContentLoaded", () => {
+//   const mainUI = document.getElementById("mainUI");
+//   const toggleUIBtn = document.getElementById("toggleUIBtn");
+
+//   toggleUIBtn.addEventListener("click", () => {
+//     const isHidden = mainUI.classList.toggle("hidden");
+//     toggleUIBtn.textContent = isHidden ? "👁 Show UI" : "🧺 Hide UI";
+//   });
+// });
+
+// window.addEventListener("DOMContentLoaded", () => {
+//   // ✅ Main UI toggle
+//   const mainUI = document.getElementById("mainUI");
+//   const toggleUIBtn = document.getElementById("toggleUIBtn");
+
+//   toggleUIBtn.addEventListener("click", () => {
+//     const isHidden = mainUI.classList.toggle("hidden");
+//     toggleUIBtn.textContent = isHidden ? "👁 Show UI" : "🧺 Hide UI";
+//   });
+
+//   // ✅ Notepad controls toggle
+//   const toggleNotepadControlsBtn = document.querySelector('[onclick="toggleNotepadControls()"]');
+//   toggleNotepadControlsBtn.addEventListener("click", () => {
+//     document.querySelector(".notepad-controls").classList.toggle("hidden");
+//   });
+// });
 window.addEventListener("DOMContentLoaded", () => {
   const notepad = document.getElementById("notepad");
   const notepadKey = "notepadContent";
@@ -693,142 +832,14 @@ window.addEventListener("DOMContentLoaded", () => {
   const mainUI = document.getElementById("mainUI");
   const toggleUIBtn = document.getElementById("toggleUIBtn");
 
-  // Function to convert URLs to links
-
-  function convertUrlsToLinks(element) {
-    const text = element.innerHTML;
-    const urlRegex = /(https?:\/\/[^\s<]+)/g;
-    const urls = text.match(urlRegex);
-
-    if (urls) {
-      let newHtml = text;
-      urls.forEach((url) => {
-        // Only convert if it's not already a link
-        if (!newHtml.includes(`href="${url}"`)) {
-          const linkHtml = `<a href="${url}" target="_blank" rel="noopener noreferrer" style="color: #007bff; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s;">${url}</a>`;
-          newHtml = newHtml.replace(url, linkHtml);
-        }
-      });
-      element.innerHTML = newHtml;
-    }
-  }
-
-  // Load saved notepad content and convert links
+  // Load saved notepad content
   const saved = localStorage.getItem(notepadKey);
-  if (saved) {
-    notepad.innerHTML = saved;
-    convertUrlsToLinks(notepad);
-  }
+  if (saved) notepad.innerHTML = saved;
 
-  // Handle input events
+  // Auto-save on input
   notepad.addEventListener("input", () => {
-    convertUrlsToLinks(notepad);
     localStorage.setItem(notepadKey, notepad.innerHTML);
   });
-
-  // Handle paste events
-  notepad.addEventListener("paste", (e) => {
-    e.preventDefault();
-    const pastedText = e.clipboardData.getData("text/plain");
-    document.execCommand("insertText", false, pastedText);
-
-    const cleanedHtml = cleanHtml(notepad.innerHTML);
-    notepad.innerHTML = cleanedHtml;
-    localStorage.setItem(notepadKey, cleanedHtml);
-  });
-
-  // Handle link clicks
-  notepad.addEventListener("click", (e) => {
-    if (e.target.tagName === "A") {
-      e.preventDefault();
-      window.open(e.target.href, "_blank", "noopener,noreferrer");
-    }
-  });
-
-// Typed data NOT persisting *** Typed data NOT persisting *** Typed data NOT persisting 
-
-  // const notepad = document.getElementById("notepad");
-  // const notepadKey = "notepadContent";
-
-  // // === Convert raw URLs into safe clickable links ===
-  // function convertUrlsToLinksSafely() {
-  //   const walker = document.createTreeWalker(notepad, NodeFilter.SHOW_TEXT, null, false);
-
-  //   while (walker.nextNode()) {
-  //     const node = walker.currentNode;
-  //     const parent = node.parentNode;
-
-  //     if (parent.tagName !== "A") {
-  //       const urlRegex = /(https?:\/\/[^\s<]+)/g;
-  //       const parts = node.textContent.split(urlRegex);
-
-  //       if (parts.length > 1) {
-  //         const fragment = document.createDocumentFragment();
-  //         parts.forEach((part) => {
-  //           if (urlRegex.test(part)) {
-  //             const a = document.createElement("a");
-  //             a.href = part;
-  //             a.textContent = part;
-  //             a.target = "_blank";
-  //             a.rel = "noopener noreferrer";
-  //             a.style.color = "#007bff";
-  //             a.style.textDecoration = "none";
-  //             a.style.borderBottom = "1px solid transparent";
-  //             a.style.transition = "border-color 0.2s";
-  //             fragment.appendChild(a);
-  //           } else {
-  //             fragment.appendChild(document.createTextNode(part));
-  //           }
-  //         });
-  //         parent.replaceChild(fragment, node);
-  //       }
-  //     }
-  //   }
-  // }
-
-  // // === Load saved content ===
-  // const saved = localStorage.getItem(notepadKey);
-  // if (saved) {
-  //   notepad.innerHTML = saved;
-  //   convertUrlsToLinksSafely();
-  // }
-
-  // // === Auto-save with conversion ===
-  // notepad.addEventListener("input", () => {
-  //   convertUrlsToLinksSafely();
-  //   localStorage.setItem(notepadKey, notepad.innerHTML);
-  // });
-
-  // // === Paste cleanly ===
-  // notepad.addEventListener("paste", (e) => {
-  //   e.preventDefault();
-  //   const pasted = e.clipboardData.getData("text/plain");
-  //   document.execCommand("insertText", false, pasted);
-  //   convertUrlsToLinksSafely();
-  //   localStorage.setItem(notepadKey, notepad.innerHTML);
-  // });
-
-  // // === Optional: open links in new tab ===
-  // notepad.addEventListener("click", (e) => {
-  //   if (e.target.tagName === "A") {
-  //     e.preventDefault();
-  //     window.open(e.target.href, "_blank", "noopener,noreferrer");
-  //   }
-  // });
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
 
   // Export notepad content
   window.downloadNotepad = function () {
@@ -858,7 +869,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Clear notepad
   window.clearNotepad = function () {
-    if (confirm("Clear the notepad? This can't be undone.")) {
+    if (confirm("Clear the notepad? This can’t be undone.")) {
       notepad.innerHTML = "";
       localStorage.removeItem(notepadKey);
     }
@@ -876,5 +887,4 @@ window.addEventListener("DOMContentLoaded", () => {
     toggleUIBtn.textContent = isHidden ? "👁 Show UI" : "🧺 Hide UI";
   });
 });
-
 document.getElementById("mainUI").classList.remove("hidden");
