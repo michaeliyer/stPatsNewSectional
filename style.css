@@ -397,7 +397,7 @@ li button {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .body-modal-content {
@@ -416,3 +416,64 @@ li button {
   margin: 2rem 0;
   width: 100%;
 }
+
+
+
+
+#mainUI {
+  display: block;
+}
+
+.bodyControlToggle {
+  background-color: #007bff;
+  cursor: pointer;
+}
+
+#notepadImport {
+  background-color: #007bff;
+}
+
+.notepad-controls {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1000;
+  background: rgba(255,255,255,0.95);
+  padding: 0.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+#notepad {
+  padding: 4rem 2rem;
+  min-height: 100vh;
+  line-height: 1.7;
+  font-size: 1.2rem;
+  outline: none;
+  max-width: 60ch;
+  margin: 0 auto;
+  transition: background 0.3s, color 0.3s;
+}
+
+.import-label {
+  background: #ddd;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+.floating-toggle {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 9999;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  background: #222;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+

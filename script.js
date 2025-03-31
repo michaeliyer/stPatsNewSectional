@@ -693,3 +693,198 @@ applyBtn.addEventListener("click", () => {
 
   modal.classList.add("hidden");
 });
+
+const notepad = document.getElementById("notepad");
+const notepadKey = "notepadContent";
+
+// Load saved content
+window.addEventListener("DOMContentLoaded", () => {
+  const saved = localStorage.getItem(notepadKey);
+  if (saved) notepad.innerHTML = saved;
+});
+
+// Auto-save on input
+notepad.addEventListener("input", () => {
+  localStorage.setItem(notepadKey, notepad.innerHTML);
+});
+
+// Export
+function downloadNotepad() {
+  const blob = new Blob([JSON.stringify({ content: notepad.innerHTML })], {
+    type: "application/json",
+  });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "notepad.json";
+  a.click();
+}
+
+// Import
+document.getElementById("notepadImport").addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    const data = JSON.parse(event.target.result);
+    if (data.content) {
+      notepad.innerHTML = data.content;
+      localStorage.setItem(notepadKey, data.content);
+    }
+  };
+  reader.readAsText(file);
+});
+
+// Clear
+// function clearNotepad() {
+//   if (confirm("Clear the notepad? This can’t be undone.")) {
+//     notepad.innerHTML = "";
+//     localStorage.removeItem(notepadKey);
+//   }
+// }
+
+// // Toggle controls
+// function toggleNotepadControls() {
+//   document.querySelector(".notepad-controls").classList.toggle("hidden");
+// }
+
+// window.addEventListener("DOMContentLoaded", () => {
+//   const notepad = document.getElementById("notepad");
+//   const notepadKey = "notepadContent";
+
+//   // Load saved content
+//   const saved = localStorage.getItem(notepadKey);
+//   if (saved) notepad.innerHTML = saved;
+
+//   // Auto-save on input
+//   notepad.addEventListener("input", () => {
+//     localStorage.setItem(notepadKey, notepad.innerHTML);
+//   });
+
+//   // Export
+//   window.downloadNotepad = function () {
+//     const blob = new Blob([JSON.stringify({ content: notepad.innerHTML })], {
+//       type: "application/json",
+//     });
+//     const a = document.createElement("a");
+//     a.href = URL.createObjectURL(blob);
+//     a.download = "notepad.json";
+//     a.click();
+//   };
+
+//   // Import
+//   document.getElementById("notepadImport").addEventListener("change", (e) => {
+//     const file = e.target.files[0];
+//     if (!file) return;
+//     const reader = new FileReader();
+//     reader.onload = (event) => {
+//       const data = JSON.parse(event.target.result);
+//       if (data.content) {
+//         notepad.innerHTML = data.content;
+//         localStorage.setItem(notepadKey, data.content);
+//       }
+//     };
+//     reader.readAsText(file);
+//   });
+
+//   // Clear
+//   window.clearNotepad = function () {
+//     if (confirm("Clear the notepad? This can’t be undone.")) {
+//       notepad.innerHTML = "";
+//       localStorage.removeItem(notepadKey);
+//     }
+//   };
+
+//   // Toggle controls
+//   window.toggleNotepadControls = function () {
+//     document.querySelector(".notepad-controls").classList.toggle("hidden");
+//   };
+// });
+// window.addEventListener("DOMContentLoaded", () => {
+//   const mainUI = document.getElementById("mainUI");
+//   const toggleUIBtn = document.getElementById("toggleUIBtn");
+
+//   toggleUIBtn.addEventListener("click", () => {
+//     const isHidden = mainUI.classList.toggle("hidden");
+//     toggleUIBtn.textContent = isHidden ? "👁 Show UI" : "🧺 Hide UI";
+//   });
+// });
+
+// window.addEventListener("DOMContentLoaded", () => {
+//   // ✅ Main UI toggle
+//   const mainUI = document.getElementById("mainUI");
+//   const toggleUIBtn = document.getElementById("toggleUIBtn");
+
+//   toggleUIBtn.addEventListener("click", () => {
+//     const isHidden = mainUI.classList.toggle("hidden");
+//     toggleUIBtn.textContent = isHidden ? "👁 Show UI" : "🧺 Hide UI";
+//   });
+
+//   // ✅ Notepad controls toggle
+//   const toggleNotepadControlsBtn = document.querySelector('[onclick="toggleNotepadControls()"]');
+//   toggleNotepadControlsBtn.addEventListener("click", () => {
+//     document.querySelector(".notepad-controls").classList.toggle("hidden");
+//   });
+// });
+window.addEventListener("DOMContentLoaded", () => {
+  const notepad = document.getElementById("notepad");
+  const notepadKey = "notepadContent";
+
+  const mainUI = document.getElementById("mainUI");
+  const toggleUIBtn = document.getElementById("toggleUIBtn");
+
+  // Load saved notepad content
+  const saved = localStorage.getItem(notepadKey);
+  if (saved) notepad.innerHTML = saved;
+
+  // Auto-save on input
+  notepad.addEventListener("input", () => {
+    localStorage.setItem(notepadKey, notepad.innerHTML);
+  });
+
+  // Export notepad content
+  window.downloadNotepad = function () {
+    const blob = new Blob([JSON.stringify({ content: notepad.innerHTML })], {
+      type: "application/json",
+    });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "notepad.json";
+    a.click();
+  };
+
+  // Import content
+  document.getElementById("notepadImport").addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const data = JSON.parse(event.target.result);
+      if (data.content) {
+        notepad.innerHTML = data.content;
+        localStorage.setItem(notepadKey, data.content);
+      }
+    };
+    reader.readAsText(file);
+  });
+
+  // Clear notepad
+  window.clearNotepad = function () {
+    if (confirm("Clear the notepad? This can’t be undone.")) {
+      notepad.innerHTML = "";
+      localStorage.removeItem(notepadKey);
+    }
+  };
+
+  // Toggle notepad controls
+  window.toggleNotepadControls = function () {
+    document.querySelector(".notepad-controls").classList.toggle("hidden");
+  };
+
+  // Toggle main UI visibility
+  toggleUIBtn.addEventListener("click", () => {
+    const isHidden = mainUI.classList.toggle("hidden");
+    console.log("Toggle UI clicked. Hidden?", isHidden); // 👈 debug
+    toggleUIBtn.textContent = isHidden ? "👁 Show UI" : "🧺 Hide UI";
+  });
+});
+document.getElementById("mainUI").classList.remove("hidden");
