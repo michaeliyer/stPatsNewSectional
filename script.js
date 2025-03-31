@@ -676,6 +676,13 @@ applyBtn.addEventListener("click", () => {
   modal.classList.add("hidden");
 });
 
+
+
+
+
+
+
+// Typed data is persisting *** html garbage showing up *** Typed data IS persisting 
 const notepad = document.getElementById("notepad");
 const notepadKey = "notepadContent";
 
@@ -687,6 +694,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const toggleUIBtn = document.getElementById("toggleUIBtn");
 
   // Function to convert URLs to links
+
   function convertUrlsToLinks(element) {
     const text = element.innerHTML;
     const urlRegex = /(https?:\/\/[^\s<]+)/g;
@@ -736,6 +744,91 @@ window.addEventListener("DOMContentLoaded", () => {
       window.open(e.target.href, "_blank", "noopener,noreferrer");
     }
   });
+
+// Typed data NOT persisting *** Typed data NOT persisting *** Typed data NOT persisting 
+
+  // const notepad = document.getElementById("notepad");
+  // const notepadKey = "notepadContent";
+
+  // // === Convert raw URLs into safe clickable links ===
+  // function convertUrlsToLinksSafely() {
+  //   const walker = document.createTreeWalker(notepad, NodeFilter.SHOW_TEXT, null, false);
+
+  //   while (walker.nextNode()) {
+  //     const node = walker.currentNode;
+  //     const parent = node.parentNode;
+
+  //     if (parent.tagName !== "A") {
+  //       const urlRegex = /(https?:\/\/[^\s<]+)/g;
+  //       const parts = node.textContent.split(urlRegex);
+
+  //       if (parts.length > 1) {
+  //         const fragment = document.createDocumentFragment();
+  //         parts.forEach((part) => {
+  //           if (urlRegex.test(part)) {
+  //             const a = document.createElement("a");
+  //             a.href = part;
+  //             a.textContent = part;
+  //             a.target = "_blank";
+  //             a.rel = "noopener noreferrer";
+  //             a.style.color = "#007bff";
+  //             a.style.textDecoration = "none";
+  //             a.style.borderBottom = "1px solid transparent";
+  //             a.style.transition = "border-color 0.2s";
+  //             fragment.appendChild(a);
+  //           } else {
+  //             fragment.appendChild(document.createTextNode(part));
+  //           }
+  //         });
+  //         parent.replaceChild(fragment, node);
+  //       }
+  //     }
+  //   }
+  // }
+
+  // // === Load saved content ===
+  // const saved = localStorage.getItem(notepadKey);
+  // if (saved) {
+  //   notepad.innerHTML = saved;
+  //   convertUrlsToLinksSafely();
+  // }
+
+  // // === Auto-save with conversion ===
+  // notepad.addEventListener("input", () => {
+  //   convertUrlsToLinksSafely();
+  //   localStorage.setItem(notepadKey, notepad.innerHTML);
+  // });
+
+  // // === Paste cleanly ===
+  // notepad.addEventListener("paste", (e) => {
+  //   e.preventDefault();
+  //   const pasted = e.clipboardData.getData("text/plain");
+  //   document.execCommand("insertText", false, pasted);
+  //   convertUrlsToLinksSafely();
+  //   localStorage.setItem(notepadKey, notepad.innerHTML);
+  // });
+
+  // // === Optional: open links in new tab ===
+  // notepad.addEventListener("click", (e) => {
+  //   if (e.target.tagName === "A") {
+  //     e.preventDefault();
+  //     window.open(e.target.href, "_blank", "noopener,noreferrer");
+  //   }
+  // });
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 
   // Export notepad content
   window.downloadNotepad = function () {
